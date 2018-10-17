@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <ul></ul>
+  <button>展示数据</button>
+</body>
+<script>
+  function $(selector) {
+    return document.querySelector(selector)
+  }
+
+  // $('button').onclick = function(){
+  //   var script = document.createElement('script')
+  //   script.src = 'http://127.0.0.1:8080/getData?callback=showData';
+  //   document.head.appendChild(script)
+  // }
+
+  function showData(data) {
+    var html = ''
+    for(var i=0; i<data.length;i++) {
+      html += '<li>' + data[i] + '</li>'
+    }
+    $('ul').innerHTML = html
+  }
+  
+  $('button').onclick = function(){
+    var xhr = new XMLHttpRequest()
+    xhr.open('GET','http://127.0.0.1:8080/getData')
+    xhr.onload = function(){
+      showData(JSON.parse(xhr.responseText))
+    }
+    xhr.send()
+  }
+</script>
+</html>
